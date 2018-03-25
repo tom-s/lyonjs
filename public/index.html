@@ -20,6 +20,9 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script>
+      window.navigator.getUserMedia = window.navigator.getUserMedia || window.navigator.webkitGetUserMedia || window.navigator.mozGetUserMedia || window.navigator.msGetUserMedia;
+    </script>
   </head>
   <!-- We have to render app in body because of fucking ar.js weird behavior ! -->
   <body id="root" style='margin : 0px; overflow: hidden;'>
