@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import uniq from 'lodash/uniq'
 import './style.css'
+const IS_MOBILE = "ontouchstart" in window
+const HELMET_RATIO = IS_MOBILE ? 0.3 : 0.7
+const TOLERANCE = IS_MOBILE ? 50 : 5
 
 class FaceTracking extends Component {
   constructor(props) {
     super(props)
     this.canvas = null
+    this.videoEl = null
     this.trackerTask = null
     this.images = []
     this.state = {
@@ -18,6 +22,10 @@ class FaceTracking extends Component {
 
   componentWillUnmount = () => {
     this.trackerTask.stop()
+    this.videoEl && this.videoEl.pause()
+    this.videoEl && this.videoEl.srcObject.getVideoTracks().forEach(track => {
+      track.stop()
+    })
   }
 
   componentDidMount = () => {
@@ -50,12 +58,11 @@ class FaceTracking extends Component {
 
   // smoothen image width
   calculateImageWidth = imgWidth => {
-    const tolerance = 5
     if (!this.previousImageWidth) return imgWidth
-    if (imgWidth - this.previousImageWidth > tolerance)
-      return this.previousImageWidth + tolerance
-    if (this.previousImageWidth - imgWidth > tolerance)
-      return this.previousImageWidth - tolerance
+    if (imgWidth - this.previousImageWidth > TOLERANCE)
+      return this.previousImageWidth + TOLERANCE
+    if (this.previousImageWidth - imgWidth > TOLERANCE)
+      return this.previousImageWidth - TOLERANCE
     return imgWidth
   }
 
@@ -70,19 +77,18 @@ class FaceTracking extends Component {
   }
 
   calculatePosition = (x, y) => {
-    const tolerance = 5
     return {
-      x: this.calculateCoordinate(x, tolerance, 'x'),
-      y: this.calculateCoordinate(y, tolerance, 'y')
+      x: this.calculateCoordinate(x, TOLERANCE, 'x'),
+      y: this.calculateCoordinate(y, TOLERANCE, 'y')
     }
   }
 
   drawFace = rect => {
     const { currentImg } = this.state
     const img = this.images[currentImg]
-    const biggerRatio = 0.7
+    
     const imgWidth = this.calculateImageWidth(
-      Math.max(rect.width, rect.height) * (1 + biggerRatio)
+      Math.max(rect.width, rect.height) * (1 + HELMET_RATIO)
     )
     this.previousImageWidth = imgWidth
     const position = this.calculatePosition(
@@ -110,6 +116,7 @@ class FaceTracking extends Component {
     <div className="FaceTracking">
       <div className="FaceTracking_wrapper">
         <video
+          ref={el => this.videoEl = el}
           width="320px"
           height="240px"
           className="FaceTracking_video"

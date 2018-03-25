@@ -25,6 +25,10 @@ class OpticalFlow extends Component {
 
   componentWillUnmount = () => {
     window.cancelAnimationFrame(this.frameRequest)
+    this.videoEl && this.videoEl.pause()
+    this.videoEl && this.videoEl.srcObject.getVideoTracks().forEach(track => {
+      track.stop()
+    })
   }
 
   componentDidMount = () => {

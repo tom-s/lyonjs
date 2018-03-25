@@ -11,29 +11,6 @@ import TakeOff from './steps/ar/takeoff'
 import Astronaut from './steps/faceTracking/helmet'
 import Stars from './steps/stars'
 
-const loadEssentialScripts = async () => {
-  const scripts = []
-  if (!window.AFRAME)
-    scripts.push(`${process.env.PUBLIC_URL}/scripts/aframe.js`)
-  if (!window.tracking) {
-    scripts.push(`${process.env.PUBLIC_URL}/scripts/tracking/tracking-min.js`)
-    scripts.push(`${process.env.PUBLIC_URL}/scripts/tracking/data/face-min.js`)
-  }
-  if (!window.oflow) {
-    scripts.push(`${process.env.PUBLIC_URL}/scripts/oflow/polyfill.js`)
-    scripts.push(`${process.env.PUBLIC_URL}/scripts/oflow/flowZone.js`)
-  }
-  if(scripts.length) {
-    await loadJS(`${process.env.PUBLIC_URL}/scripts/getusermedia-polyfill.js`) // load polyfill first
-    await loadJS(scripts)
-  }
-  // aframe-ar requires to be loaded afterwards
-  if (!window.AR) {
-    await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar.js`])
-    await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar-lookat.js`])
-  }
-}
-
 const getPreviousStep = step => {
   const currentStepIndex = STEPS.findIndex(({ id }) => id === step)
   const nextStepIndex =
@@ -55,15 +32,15 @@ const STEPS = [
     component: Stars
   },
   {
+    id: 'astronaut',
+    title: 'Prêt pour le départ',
+    component: Astronaut
+  },
+  {
     id: 'spaceVideos',
     title: `Des rêves d'espace`,
     component: SpaceVideos,
     isAr: true
-  },
-  {
-    id: 'astronaut',
-    title: 'Prêt pour le départ',
-    component: Astronaut
   },
   {
     id: 'takeOff',
@@ -77,12 +54,39 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      step: 'spaceVideos',
+      step: 'inTheStars',
       scriptsReady: false
     }
   }
   componentDidMount = async () => {
-    await loadEssentialScripts()
+    await this.loadEssentialScripts()
+  }
+
+  componentWillUpdate = (nextProps, nextState) => {
+    // Because AR.js doesn't free cameras, we need to reload the whole page
+    if(this.state.step !== STEPS[0].id && nextState.step === STEPS[0].id) {
+      window.location.reload()
+    }
+  }
+
+  loadEssentialScripts = async () => {
+    const { step } = this.state
+    const currentStep = STEPS.find(({ id }) => id === step)
+    const isAr = currentStep.isAr
+
+    await loadJS(`${process.env.PUBLIC_URL}/scripts/getusermedia-polyfill.js`) // load polyfill first
+    await loadJS(`${process.env.PUBLIC_URL}/scripts/oflow/polyfill.js`)
+    
+    if (isAr) {
+      await loadJS(`${process.env.PUBLIC_URL}/scripts/aframe.js`)
+      await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar.js`])
+      await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar-lookat.js`])
+    } else {
+      await loadJS(`${process.env.PUBLIC_URL}/scripts/tracking/tracking-min.js`)
+      await loadJS(`${process.env.PUBLIC_URL}/scripts/tracking/data/face-min.js`)
+      await loadJS(`${process.env.PUBLIC_URL}/scripts/oflow/flowZone.js`)
+    }
+
     this.setState({
       scriptsReady: true
     })
@@ -108,15 +112,24 @@ class App extends Component {
       <Loader />
     )
   }
+  /*
   onPrevious = () => {
     this.setState(prevState => ({
+      scriptsReady: false,
       step: getPreviousStep(prevState.step)
-    }))
-  }
+    }), () => {
+      this.loadEssentialScripts()
+    })
+  }*/ 
+
   onNext = () => {
     this.setState(prevState => ({
+      scriptsReady: false,
       step: getNextStep(prevState.step)
-    }))
+    }), () => {
+      // We reload the scripts every time, cause some might override others variables
+      this.loadEssentialScripts()
+    })
   }
 }
 

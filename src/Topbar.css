@@ -8,7 +8,7 @@
   display: -webkit-flex;
   background-color: #282f35;
   color: #ffffff;
-  z-index: 1;
+  z-index: 100000;
   justify-content: space-between;
 }
 

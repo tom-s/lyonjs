@@ -12,7 +12,8 @@
 
 .Oflow_wrapper {
   margin: auto;
-  position: relative;
+  position: absolute;
+  top: 0;
   width: 640px;
   height: 480px;
   transform: scale(0.5);

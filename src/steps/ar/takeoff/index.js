@@ -1,39 +1,45 @@
 import React, { Component } from 'react'
 import { Entity } from 'aframe-react'
 import './style.css'
+const IS_MOBILE = "ontouchstart" in window
 
 const LOCATIONS = [
-  {
-    id: 'observatory',
-    title: 'Observatoire de Greenwich, Londres, Grande-Bretagne',
-    scale: '0.1 0.1 0.1',
-    rocket: {
-      position: '-1.1 -0.1 0',
-      toPosition: '-1.1 5 0',
-      scale: '0.07 0.07 0.07'
-    }
-  },
   {
     id: 'pattaya',
     title: 'Pattaya, Chonburi, Thailande',
     scale: '0.3 0.3 0.3',
     rocket: {
       position: '-1.1 0 0',
-      toPosition: '-1.1 5 0',
+      toPosition: '-1.1 10 0',
       scale: '0.2 0.2 0.2'
     }
-  },
-  {
+  }
+]
+
+// Extra locations for desktop
+if(!IS_MOBILE) {
+  LOCATIONS.push(
+    {
+      id: 'observatory',
+      title: 'Observatoire de Greenwich, Londres, Grande-Bretagne',
+      scale: '0.1 0.1 0.1',
+      rocket: {
+        position: '-1.1 -0.1 0',
+        toPosition: '-1.1 10 0',
+        scale: '0.07 0.07 0.07'
+      }
+    })
+  LOCATIONS.push({
     id: 'weidelsburg',
     title: 'Château de Weidelsburg, Büren, Allemagne',
     scale: '0.3 0.3 0.3',
     rocket: {
       position: '0 0 0.1',
-      toPosition: '-1.1 5 1',
+      toPosition: '-1.1 10 1',
       scale: '0.07 0.07 0.07'
     }
-  }
-]
+  })
+}
 
 const COUNTDOWN_DURATION = 36
 

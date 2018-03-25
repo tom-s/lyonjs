@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Entity, Scene } from 'aframe-react'
 import Loader from '../../loader'
+const IS_MOBILE = "ontouchstart" in window
 
 class ArScene extends Component {
   constructor(props) {
@@ -11,12 +12,12 @@ class ArScene extends Component {
   }
   componentDidMount = () => {
     window.document.querySelector('a-assets').addEventListener('loaded', () => {
-      console.log('assets loaded')
       this.setState({
         assetsLoaded: true
       })
     })
   }
+
   render = () => {
     const { assetsLoaded } = this.state
     const { Step } = this.props
@@ -29,22 +30,22 @@ class ArScene extends Component {
         {/* Load all assets */}
         {!assetsLoaded && <Loader />}
         <Entity primitive="a-assets">
-          <a-asset-item
+          {!IS_MOBILE && <a-asset-item
             id="observatory"
             src={`${
               process.env.PUBLIC_URL
             }/models/location/observatory/scene.gltf`}
-          />
+          />}
           <a-asset-item
             id="pattaya"
             src={`${process.env.PUBLIC_URL}/models/location/pattaya/scene.gltf`}
           />
-          <a-asset-item
+          {!IS_MOBILE && <a-asset-item
             id="weidelsburg"
             src={`${
               process.env.PUBLIC_URL
             }/models/location/weidelsburg/scene.gltf`}
-          />
+          />}
 
           <a-asset-item
             id="rocket5"

@@ -4,9 +4,8 @@ import './Topbar.css'
 const Topbar = ({ onPrevious, onNext, title, isAr }) => (
   <nav className="Topbar">
     <div className="Topbar_previous" onClick={onPrevious}>
-      {' '}
-      {'<'}{' '}
-    </div>
+      {/*{' '}{'<'}{' '}*/}
+    </div> 
     <div className="Topbar_title">
       {title}{' '}
       {isAr && (

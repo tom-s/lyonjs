@@ -2,17 +2,13 @@ Code for meetupJS
 
 ## TODO
 
-* faire décollage
+* faire cube avec les vidéos
 * faire slides avec toutes les références (+ lien github)
-* vérifier que ca fonctionne sur mobile (et serrer les fesses)
-* améliorer expérience vidéos de l'espace
-* en mode cosmonaute ajouter un filtre de son
 * faire description et l'envoyer à paul
 
 # Code
 
 * exemple OCR ?
-* ajouter compteur FPS
 * complete readme
 * gérer le display flex sur safari ?
 * ajouter les ressources pour les modeles 3d
@@ -30,3 +26,5 @@ Code for meetupJS
 - et coté serveur ?
 - parler du futur (compilation en js avec webAssembly)
 - parler ocr
+- parler amélioration perf avec webgl (sur les ex)
+- parler du fait que AR.js par est pourri est ne permet pas de libérer les caméras
