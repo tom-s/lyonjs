@@ -384,7 +384,7 @@
     
                     desiredDevice = { optional: [{sourceId: selectedVideoSource}] };
     
-                    navigator.getUserMedia({ video: desiredDevice }, function(stream) {
+                    navigator.getUserMedia({ video: desiredDevice }).then(stream => {
                         isCapturing = true;
                         localStream = stream;
                         videoTag.src = window.URL.createObjectURL(stream);

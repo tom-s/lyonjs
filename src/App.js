@@ -23,7 +23,10 @@ const loadEssentialScripts = async () => {
     scripts.push(`${process.env.PUBLIC_URL}/scripts/oflow/polyfill.js`)
     scripts.push(`${process.env.PUBLIC_URL}/scripts/oflow/flowZone.js`)
   }
-  await loadJS(scripts)
+  if(scripts.length) {
+    await loadJS(`${process.env.PUBLIC_URL}/scripts/getusermedia-polyfill.js`) // load polyfill first
+    await loadJS(scripts)
+  }
   // aframe-ar requires to be loaded afterwards
   if (!window.AR) {
     await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar.js`])
