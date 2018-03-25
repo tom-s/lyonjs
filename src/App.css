@@ -1,0 +1,20 @@
+body {
+  font-family: 'Helvetica';
+  background-color: #282f35;
+  font-size: 18px;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+.Step_button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 200px;
+  height: 50px;
+  z-index: 1;
+}
