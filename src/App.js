@@ -54,7 +54,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      step: 'inTheStars',
+      step: 'spaceVideos', //'inTheStars',
       scriptsReady: false
     }
   }
@@ -63,7 +63,7 @@ class App extends Component {
   }
 
   componentWillUpdate = (nextProps, nextState) => {
-    // Because AR.js doesn't free cameras, we need to reload the whole page
+    // Because AR.js doesn't free cameras, we need to reload the whole fucking page
     if(this.state.step !== STEPS[0].id && nextState.step === STEPS[0].id) {
       window.location.reload()
     }
@@ -80,7 +80,6 @@ class App extends Component {
     if (isAr) {
       await loadJS(`${process.env.PUBLIC_URL}/scripts/aframe.js`)
       await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar.js`])
-      await loadJS([`${process.env.PUBLIC_URL}/scripts/aframe-ar-lookat.js`])
     } else {
       await loadJS(`${process.env.PUBLIC_URL}/scripts/tracking/tracking-min.js`)
       await loadJS(`${process.env.PUBLIC_URL}/scripts/tracking/data/face-min.js`)
