@@ -2,7 +2,7 @@
   "name": "meetupjs",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://experiments.thomschell.com/meetup/",
+  "homepage": "http://meetup270318.lelivrescolaire.fr.s3-website-eu-west-1.amazonaws.com/",
   "dependencies": {
     "aframe": "^0.8.1",
     "aframe-react": "^4.4.0",
