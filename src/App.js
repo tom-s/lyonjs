@@ -39,7 +39,7 @@ const STEPS = [
   },
   {
     id: 'spaceVideos',
-    title: `L'esâce en vidéos`,
+    title: `L'espace en vidéos`,
     component: SpaceVideos,
     isAr: true
   },
