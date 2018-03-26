@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import './style.css'
-
+const IS_MOBILE = "ontouchstart" in window
 const scale = 2
 const fStep = scale
 
@@ -126,7 +126,7 @@ class OpticalFlow extends Component {
   }
 
   updateCanvas = (d, f) => {
-    const gap = 10
+    const gap = IS_MOBILE ? 50 : 10
     const context = this.fcanvasEl.getContext('2d')
     var min = 2
     var maxLife = 100

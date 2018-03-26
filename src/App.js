@@ -11,12 +11,13 @@ import TakeOff from './steps/ar/takeoff'
 import Astronaut from './steps/faceTracking/helmet'
 import Stars from './steps/stars'
 
+/*
 const getPreviousStep = step => {
   const currentStepIndex = STEPS.findIndex(({ id }) => id === step)
   const nextStepIndex =
     currentStepIndex === 0 ? STEPS.length - 1 : currentStepIndex - 1
   return STEPS[nextStepIndex].id
-}
+}*/
 
 const getNextStep = step => {
   const currentStepIndex = STEPS.findIndex(({ id }) => id === step)
