@@ -34,12 +34,12 @@ const STEPS = [
   },
   {
     id: 'astronaut',
-    title: 'Prêt pour le départ',
+    title: 'Deviens astronaute',
     component: Astronaut
   },
   {
     id: 'spaceVideos',
-    title: `Des rêves d'espace`,
+    title: `L'esâce en vidéos`,
     component: SpaceVideos,
     isAr: true
   },
